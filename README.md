@@ -49,7 +49,7 @@ You can then query for the `AuthenticationContext` in your service endpoint impl
 
 ```scala
 val currentUser: Option[AuthenticationContext] =
-  IdTokenInterceptor.getIdTokenContext[AuthenticatedContext]()
+  IdTokenInterceptor.getIdTokenContext[AuthenticationContext]()
 ```
 
 ### Alternative Configuration
