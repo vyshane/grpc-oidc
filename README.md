@@ -4,6 +4,13 @@
 
 ## Example Usage
 
+Add the grpc-oidc library to your `build.sbt`:
+
+```
+resolvers += Resolver.bintrayRepo("vyshane", "maven")
+libraryDependencies += "mu.node" %% "grpc-oidc" % "0.1.0"
+```
+
 You can configure OIDC via [Lightbend Config](https://github.com/lightbend/config). Here's a sample application.conf:
 
 ```
