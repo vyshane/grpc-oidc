@@ -1,0 +1,15 @@
+// Copyright 2018 Vy-Shane Xie Sin Fat
+//
+// A minimal service for testing gRPC authentication
+
+syntax = "proto3";
+
+package mu.node.test;
+
+service TestService {
+    rpc Ping (PingRequest) returns (PongResponse) {};
+}
+
+message PingRequest {}
+
+message PongResponse {}
