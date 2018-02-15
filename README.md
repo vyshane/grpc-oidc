@@ -2,6 +2,12 @@
 
 [OpenID Connect](http://openid.net/connect/) integration for [gRPC](https://grpc.io), in Scala.
 
+grpc-oidc authenticates RPC calls by checking the `Authorization` HTTP header for the ID token. It expects the header to be in this format:
+ 
+```
+Authorization: Bearer ${id_token}
+```
+
 ## Example Usage
 
 Add the grpc-oidc library to your `build.sbt`:
@@ -21,6 +27,8 @@ You can configure OIDC via [Lightbend Config](https://github.com/lightbend/confi
    jwksUrl="https://www.googleapis.com/oauth2/v3/certs"
  }
 ```
+
+### Server-side: Checking Authenticated Calls
 
 First, define a case class to hold the authentication context.
 
@@ -59,9 +67,9 @@ val currentUser: Option[AuthenticationContext] =
   IdTokenInterceptor.getIdTokenContext[AuthenticationContext]()
 ```
 
-### Alternative Configuration
+#### Alternative Configuration
 
-You can also construct the interceptor in code:
+You can also configure the interceptor in code:
 
 ```scala
 val interceptor = IdTokenInterceptor(AuthenticationContext(_),
@@ -69,5 +77,16 @@ val interceptor = IdTokenInterceptor(AuthenticationContext(_),
                                      "myapp",
                                      JWSAlgorithm.RS256,
                                      "https://www.googleapis.com/oauth2/v3/certs")
+
+```
+
+### Client-side: Making Authenticated Calls
+
+You can use `IdTokenCredential` to make authenticated calls to a service. You pass in the ID token as a String and it will be sent as the Bearer token with the HTTP `Authorization` header. For example:
+
+```scala
+userServiceStub
+  .withCallCredentials(IdTokenCredentials(idToken))
+  .getMyProfile(GetMyProfileRequest())
 
 ```
