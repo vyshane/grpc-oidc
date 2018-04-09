@@ -1,6 +1,6 @@
 # Dex docker image for integration tests
 
-FROM quay.io/coreos/dex:v2.9.0
+FROM quay.io/coreos/dex:v2.10.0
 
 COPY config.yaml /
 RUN touch /dex.db
